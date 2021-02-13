@@ -1,12 +1,14 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -33,9 +35,6 @@ document.addEventListener('keydown', function (e) {
 
 ///////////////////////////////////////
 // Implementing smooth scrolling
-
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', e => {
   // --------------> Get the coords (x, y)
@@ -68,3 +67,67 @@ btnScrollTo.addEventListener('click', e => {
   // --------------> Scrolling with smooth effect modern option
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+///////////////////////////////////////
+// Implementing Page navigation
+
+// document.querySelectorAll('.nav__link').forEach(el => {
+//   el.addEventListener('click', e => {
+//     e.preventDefault();
+
+//     const id = e.currentTarget.getAttribute('href');
+//     const sectionId = document.querySelector(id);
+
+//     sectionId.scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// Event Delegation Method
+// 1- Add event listener to common parent element
+document.querySelector('.nav__links').addEventListener('click', e => {
+  e.preventDefault();
+
+  // 2- Determine wath element originated the event
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    const sectionId = document.querySelector(id);
+
+    sectionId.scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+/////////////////////////////////////////
+
+// const randInt = (max, min = 0) => Math.floor(Math.random() * (max - min));
+
+// const randColor = () => `rgb(${randInt(255)},${randInt(255)},${randInt(255)})`;
+
+// const nav = document.querySelector('.nav');
+// const navLinks = document.querySelector('.nav__links');
+// const navLink = document.querySelector('.nav__link');
+
+// navLink.addEventListener('click', function (e) {
+//   this.style.backgroundColor = randColor();
+
+//   console.log('navLink', e.target, e.currentTarget);
+
+//   // TRUE
+//   console.log(e.currentTarget === this);
+
+//   // STOP Propagation (NOT THE GOOD WAY)
+//   e.stopPropagation();
+// });
+
+// navLinks.addEventListener('click', function (e) {
+//   this.style.backgroundColor = randColor();
+
+//   console.log('navLinks', e.target, e.currentTarget);
+
+//   // e.stopImmediatePropagation();
+// });
+
+// nav.addEventListener('click', function (e) {
+//   this.style.backgroundColor = randColor();
+
+//   console.log('nav', e.target, e.currentTarget);
+// });
