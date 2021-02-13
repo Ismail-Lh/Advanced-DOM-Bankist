@@ -97,6 +97,31 @@ document.querySelector('.nav__links').addEventListener('click', e => {
 });
 
 /////////////////////////////////////////
+// Tabbed Component
+const tabsBtn = document.querySelectorAll('.operations__tab');
+const TabContainer = document.querySelector('.operations__tab-container');
+const operContent = document.querySelectorAll('.operations__content');
+
+TabContainer.addEventListener('click', e => {
+  const clickedBtn = e.target.closest('.operations__tab');
+
+  if (!clickedBtn) return;
+
+  // Remove active classes
+  tabsBtn.forEach(t => t.classList.remove('operations__tab--active'));
+  operContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Add active classes to the clicked El
+  clickedBtn.classList.add('operations__tab--active');
+
+  const id = clickedBtn.dataset.tab;
+
+  // Activate content area was clicked
+  const content = document.querySelector(`.operations__content--${id}`);
+  content.classList.add('operations__content--active');
+});
+
+/////////////////////////////////////////
 
 // const randInt = (max, min = 0) => Math.floor(Math.random() * (max - min));
 
