@@ -145,6 +145,18 @@ nav.addEventListener('mouseover', fadeAnimation.bind(0.5));
 nav.addEventListener('mouseout', fadeAnimation.bind(1));
 
 /////////////////////////////////////////
+// Implementing the Sticky Navigation
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
+/////////////////////////////////////////
 
 // const randInt = (max, min = 0) => Math.floor(Math.random() * (max - min));
 
