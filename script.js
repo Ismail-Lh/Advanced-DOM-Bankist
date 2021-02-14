@@ -6,6 +6,11 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const tabsBtn = document.querySelectorAll('.operations__tab');
+const TabContainer = document.querySelector('.operations__tab-container');
+const operContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
+const navLinks = document.querySelector('.nav__links');
 
 ///////////////////////////////////////
 // Modal window
@@ -84,7 +89,7 @@ btnScrollTo.addEventListener('click', e => {
 
 // Event Delegation Method
 // 1- Add event listener to common parent element
-document.querySelector('.nav__links').addEventListener('click', e => {
+navLinks.addEventListener('click', e => {
   e.preventDefault();
 
   // 2- Determine wath element originated the event
@@ -98,10 +103,6 @@ document.querySelector('.nav__links').addEventListener('click', e => {
 
 /////////////////////////////////////////
 // Tabbed Component
-const tabsBtn = document.querySelectorAll('.operations__tab');
-const TabContainer = document.querySelector('.operations__tab-container');
-const operContent = document.querySelectorAll('.operations__content');
-
 TabContainer.addEventListener('click', e => {
   const clickedBtn = e.target.closest('.operations__tab');
 
@@ -120,6 +121,28 @@ TabContainer.addEventListener('click', e => {
   const content = document.querySelector(`.operations__content--${id}`);
   content.classList.add('operations__content--active');
 });
+
+/////////////////////////////////////////
+// Menu fade animation
+const fadeAnimation = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const clickedLink = e.target;
+    const siblings = clickedLink.closest('.nav').querySelectorAll('.nav__link');
+    const logo = clickedLink.closest('nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== clickedLink) {
+        el.style.opacity = this;
+      }
+    });
+
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', fadeAnimation.bind(0.5));
+
+nav.addEventListener('mouseout', fadeAnimation.bind(1));
 
 /////////////////////////////////////////
 
