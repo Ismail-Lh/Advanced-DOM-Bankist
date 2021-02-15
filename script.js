@@ -14,6 +14,9 @@ const navLinks = document.querySelector('.nav__links');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 const imgTargets = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const sliderBtnLeft = document.querySelector('.slider__btn--left');
+const sliderBtnRight = document.querySelector('.slider__btn--right');
 
 ///////////////////////////////////////
 // Modal window
@@ -216,7 +219,7 @@ const sectionObserver = new IntersectionObserver(revealSect, {
 
 allSections.forEach(sect => {
   sectionObserver.observe(sect);
-  sect.classList.add('section--hidden');
+  // sect.classList.add('section--hidden');
 });
 
 /////////////////////////////////////////
@@ -246,6 +249,43 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+/////////////////////////////////////////
+// Building a Slider Component Part 1
+const goToSlide = slide => {
+  slides.forEach(
+    (sld, idx) => (sld.style.transform = `translateX(${100 * (idx - slide)}%)`)
+  );
+};
+
+goToSlide(0);
+
+let currSlide = 0;
+const maxSlides = slides.length;
+
+const nextSlide = () => {
+  if (currSlide === maxSlides - 1) {
+    currSlide = 0;
+  } else {
+    currSlide++;
+  }
+
+  goToSlide(currSlide);
+};
+
+const prevSlide = () => {
+  if (currSlide === 0) {
+    currSlide = maxSlides - 1;
+  } else {
+    currSlide--;
+  }
+
+  goToSlide(currSlide);
+};
+
+sliderBtnRight.addEventListener('click', nextSlide);
+
+sliderBtnLeft.addEventListener('click', prevSlide);
 
 /////////////////////////////////////////
 
