@@ -13,6 +13,7 @@ const nav = document.querySelector('.nav');
 const navLinks = document.querySelector('.nav__links');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
+const imgTargets = document.querySelectorAll('img[data-src]');
 
 ///////////////////////////////////////
 // Modal window
@@ -196,6 +197,7 @@ headerObserver.observe(header);
 
 /////////////////////////////////////////
 // Revealing Sections on Scroll
+
 const revealSect = (entries, observer) => {
   const [entry] = entries;
   console.log(entry);
@@ -216,6 +218,34 @@ allSections.forEach(sect => {
   sectionObserver.observe(sect);
   sect.classList.add('section--hidden');
 });
+
+/////////////////////////////////////////
+// Lazy Loading Images Effect
+console.log(imgTargets);
+const loadImg = (entries, observer) => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  // Remove the blure effect win the new img is load
+  entry.target.addEventListener('load', () => {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  // Stop observing
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
 
 /////////////////////////////////////////
 
