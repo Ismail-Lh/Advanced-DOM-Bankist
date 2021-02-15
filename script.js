@@ -11,6 +11,7 @@ const TabContainer = document.querySelector('.operations__tab-container');
 const operContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const navLinks = document.querySelector('.nav__links');
+const header = document.querySelector('.header');
 
 ///////////////////////////////////////
 // Modal window
@@ -146,15 +147,50 @@ nav.addEventListener('mouseout', fadeAnimation.bind(1));
 
 /////////////////////////////////////////
 // Implementing the Sticky Navigation
-const initialCoords = section1.getBoundingClientRect();
+// const initialCoords = section1.getBoundingClientRect();
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > initialCoords.top) {
+// window.addEventListener('scroll', () => {
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
+
+// Implementing the Sticky Navigation with The Intersection Observer API
+const stickyNav = entries => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) {
     nav.classList.add('sticky');
   } else {
     nav.classList.remove('sticky');
   }
+};
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+
+headerObserver.observe(header);
+
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
 
 /////////////////////////////////////////
 
